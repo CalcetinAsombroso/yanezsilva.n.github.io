@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Invitados</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      font-family: 'Georgia', serif;
+      margin: 2em;
+    }
+    h1 {
+      text-align: center;
+      color: #d4af37;
+      margin-bottom: 1em;
+    }
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #2a2a2a;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+    }
+    fieldset {
+      border: 1px solid #555;
+      padding: 1em;
+      margin-bottom: 1em;
+    }
+    legend {
+      color: #c9a0dc;
+      padding: 0 0.5em;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.2em;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #666;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    button {
+      background-color: #5e2b72;
+      border: none;
+      cursor: pointer;
+      margin-top: 1em;
+    }
+    button:hover {
+      background-color: #7e3e90;
+    }
+  </style>
+  <script>
+    function generarInvitados() {
+      const cantidad = parseInt(document.getElementById("cantidadInvitados").value);
+      const contenedor = document.getElementById("invitadosContainer");
+      contenedor.innerHTML = "";
+
+      for (let i = 1; i <= cantidad && i <= 8; i++) {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <fieldset>
+            <legend>Invitado ${i}</legend>
+            <label>Nombre: <input name="invitado${i}_nombre" required></label>
+            <label>Tipo:
+              <select name="invitado${i}_tipo">
+                <option value="adulto">Adulto</option>
+                <option value="niño">Niño</option>
+              </select>
+            </label>
+            <label>Restricción alimentaria:
+              <select name="invitado${i}_restriccion">
+                <option value="ninguna">Ninguna</option>
+                <option value="vegetariano">Vegetariano</option>
+                <option value="vegano">Vegano</option>
+              </select>
+            </label>
+            <label>Alergia alimentaria:
+              <select name="invitado${i}_alergia" onchange="mostrarOtraAlergia(this, ${i})">
+                <option value="ninguna">Ninguna</option>
+                <option value="celiaco">Celíaco</option>
+                <option value="otra">Otra</option>
+              </select>
+            </label>
+            <div id="alergiaOtra_${i}" style="display:none">
+              <label>Especificar alergia: <input name="invitado${i}_alergia_otro"></label>
+            </div>
+          </fieldset>
+        `;
+        contenedor.appendChild(div);
+      }
+    }
+
+    function mostrarOtraAlergia(select, index) {
+      const div = document.getElementById(`alergiaOtra_${index}`);
+      div.style.display = (select.value === "otra") ? "block" : "none";
+    }
+  </script>
+</head>
+<body>
+  <h1>Confirmación de Invitados</h1>
+  <p style="text-align: center; font-size: 1.1em; margin-bottom: 2em; color: #ccc;">
+    Matrimonio de <strong>Fernanda y Nicolás</strong><br>
+    Lugar: Casa Irene, La Cañada del Carmen B, Lampa<br>
+    Fecha y hora: 17 de octubre de 2025, 19:00 horas
+  </p>
+  <form action="https://formsubmit.co/yanezsilva.n@gmail.com" method="POST">
+    <label>Correo del líder de familia:
+      <input type="email" name="email_lider" required>
+    </label>
+
+    <label>¿Cuántos invitados asistirán? (máx. 8):
+      <input type="number" id="cantidadInvitados" name="cantidad" min="1" max="8" required onchange="generarInvitados()">
+    </label>
+
+    <div id="invitadosContainer"></div>
+
+    <!-- Este campo permite a FormSubmit redirigir después del envío -->
+    <input type="hidden" name="_next" value="https://yanezsilva.n.github.io/gracias">
+
+    <!-- Este campo oculta el captcha de FormSubmit -->
+    <input type="hidden" name="_captcha" value="false">
+
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>
