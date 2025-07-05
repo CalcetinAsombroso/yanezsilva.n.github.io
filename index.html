@@ -66,30 +66,34 @@
         const div = document.createElement("div");
         div.innerHTML = `
           <fieldset>
-            <legend>Invitado</legend>
-            <label>Nombre y Apellido: <input name="invitado_nombre_apellido" required></label>
+            <legend>Invitado ${i}</legend>
+            <label>Nombre y Apellido:
+              <input name="invitado${i}_nombre_apellido" required>
+            </label>
             <label>Tipo:
-              <select name="invitado_tipo">
+              <select name="invitado${i}_tipo">
                 <option value="adulto">Adulto</option>
                 <option value="niño">Niño</option>
               </select>
             </label>
             <label>Restricción alimentaria:
-              <select name="invitado_restriccion">
+              <select name="invitado${i}_restriccion">
                 <option value="ninguna">Ninguna</option>
                 <option value="vegetariano">Vegetariano</option>
                 <option value="vegano">Vegano</option>
               </select>
             </label>
             <label>Alergia alimentaria:
-              <select name="invitado_alergia" onchange="mostrarOtraAlergia(this, ${i})">
+              <select name="invitado${i}_alergia" onchange="mostrarOtraAlergia(this, ${i})">
                 <option value="ninguna">Ninguna</option>
                 <option value="celiaco">Celíaco</option>
                 <option value="otra">Otra</option>
               </select>
             </label>
-            <div id="alergiaOtra" style="display:none">
-              <label>Especificar alergia: <input name="invitado_alergia_otro"></label>
+            <div id="alergiaOtra_${i}" style="display:none">
+              <label>Especificar alergia:
+                <input name="invitado${i}_alergia_otro">
+              </label>
             </div>
           </fieldset>
         `;
@@ -120,12 +124,6 @@
     </label>
 
     <div id="invitadosContainer"></div>
-
-    <!-- Este campo permite a FormSubmit redirigir después del envío -->
-    <input type="hidden" name="_next" value="https://yanezsilva.n.github.io/gracias">
-
-    <!-- Este campo oculta el captcha de FormSubmit -->
-    <input type="hidden" name="_captcha" value="false">
 
     <button type="submit">Enviar</button>
   </form>
