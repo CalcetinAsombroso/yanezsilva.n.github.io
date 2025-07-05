@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Confirmación de Invitados</title>
+  <title>Confirmación de hasta 2 Invitados</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background-color: #1a1a1a;
@@ -11,12 +12,27 @@
       margin: 0;
       padding: 0;
     }
-    .imagen-portada {
+    .carrusel {
+      display: flex;
+      overflow: hidden;
       width: 100%;
-      height: 600px;
-      background: url('https://i.imgur.com/YxWv45P.jpeg') no-repeat center center;
-      background-size: contain;
+      height: 320px;
+      position: relative;
       background-color: #000;
+    }
+    .carrusel-inner {
+      display: flex;
+      animation: scroll 40s linear infinite;
+    }
+    .carrusel img {
+      height: 320px;
+      width: auto;
+      margin-right: 5px;
+      flex-shrink: 0;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
     h1 {
       text-align: center;
@@ -61,56 +77,33 @@
     button:hover {
       background-color: #7e3e90;
     }
-  </style>
-  <script>
-    function generarInvitados() {
-      const cantidad = parseInt(document.getElementById("cantidadInvitados").value);
-      const contenedor = document.getElementById("invitadosContainer");
-      contenedor.innerHTML = "";
-
-      for (let i = 1; i <= cantidad && i <= 2; i++) {
-        const div = document.createElement("div");
-        div.innerHTML = `
-          <fieldset>
-            <legend>Invitado ${i}</legend>
-            <label>Nombre y Apellido: <input name="invitado${i}_nombre_apellido" required></label>
-            <label>Tipo:
-              <select name="invitado${i}_tipo">
-                <option value="adulto">Adulto</option>
-                <option value="niño">Niño</option>
-              </select>
-            </label>
-            <label>Restricción alimentaria:
-              <select name="invitado${i}_restriccion">
-                <option value="ninguna">Ninguna</option>
-                <option value="vegetariano">Vegetariano</option>
-                <option value="vegano">Vegano</option>
-              </select>
-            </label>
-            <label>Alergia alimentaria:
-              <select name="invitado${i}_alergia" onchange="mostrarOtraAlergia(this, ${i})">
-                <option value="ninguna">Ninguna</option>
-                <option value="celiaco">Celíaco</option>
-                <option value="otra">Otra</option>
-              </select>
-            </label>
-            <div id="alergiaOtra_${i}" style="display:none">
-              <label>Especificar alergia: <input name="invitado${i}_alergia_otro"></label>
-            </div>
-          </fieldset>
-        `;
-        contenedor.appendChild(div);
+    @media (max-width: 600px) {
+      .carrusel, .carrusel img {
+        height: 200px;
+      }
+      form {
+        padding: 1em;
+        margin: 1em;
       }
     }
-
-    function mostrarOtraAlergia(select, index) {
-      const div = document.getElementById(`alergiaOtra_${index}`);
-      div.style.display = (select.value === "otra") ? "block" : "none";
-    }
-  </script>
+  </style>
 </head>
 <body>
-  <div class="imagen-portada"></div>
+  <div class="carrusel">
+    <div class="carrusel-inner">
+      <img src="https://i.imgur.com/7ZCANjH.jpeg" alt="img1">
+      <img src="https://i.imgur.com/IlQAGqr.gif" alt="img2">
+      <img src="https://i.imgur.com/Z9oQYDA.jpeg" alt="img3">
+      <img src="https://i.imgur.com/f6pqYAe.jpeg" alt="img4">
+      <img src="https://i.imgur.com/YxWv45P.jpeg" alt="img5">
+      <img src="https://i.imgur.com/7ZCANjH.jpeg" alt="img1">
+      <img src="https://i.imgur.com/IlQAGqr.gif" alt="img2">
+      <img src="https://i.imgur.com/Z9oQYDA.jpeg" alt="img3">
+      <img src="https://i.imgur.com/f6pqYAe.jpeg" alt="img4">
+      <img src="https://i.imgur.com/YxWv45P.jpeg" alt="img5">
+    </div>
+  </div>
+
   <h1>Confirmación de Invitados</h1>
   <p style="text-align: center; font-size: 1.1em; color: #ccc;">
     Matrimonio de <strong>Fernanda y Nicolás</strong><br>
@@ -118,16 +111,70 @@
     Fecha y hora: 17 de octubre de 2025, 19:00 horas
   </p>
 
-  <form action="https://script.google.com/macros/s/AKfycbxFhqzncnJXrUMHc-HFz-MfSx2atASKBFIiBpTJDRwmr_nMlaULRajCEpvaaeuPji4SEQ/exec" method="POST">
-    <label>Correo del líder de familia:
+  <form action="https://script.google.com/macros/s/AKfycbxjJhxrUxu9ullW67EYOCp_s7bsP7pZLNjVQjkiIJLF5s4AmkR-YJyeTOhXek-MRFhY/exec" method="POST">
+    <label>Correo:
       <input type="email" name="email_lider" required>
     </label>
 
-    <label>¿Cuántos invitados asistirán? (máx. 2):
-      <input type="number" id="cantidadInvitados" name="cantidad" min="1" max="2" required onchange="generarInvitados()">
-    </label>
+    <input type="hidden" name="cantidad" value="2">
 
-    <div id="invitadosContainer"></div>
+    <!-- Invitado 1 -->
+    <fieldset>
+      <legend>Invitado 1</legend>
+      <label>Nombre y Apellido: <input name="invitado1_nombre_apellido" required></label>
+      <label>Tipo:
+        <select name="invitado1_tipo">
+          <option value="adulto">Adulto</option>
+          <option value="niño">Niño</option>
+        </select>
+      </label>
+      <label>Restricción alimentaria:
+        <select name="invitado1_restriccion">
+          <option value="ninguna">Ninguna</option>
+          <option value="vegetariano">Vegetariano</option>
+          <option value="vegano">Vegano</option>
+        </select>
+      </label>
+      <label>Alergia alimentaria:
+        <select name="invitado1_alergia" onchange="document.getElementById('alergiaOtra_1').style.display = this.value === 'otra' ? 'block' : 'none';">
+          <option value="ninguna">Ninguna</option>
+          <option value="celiaco">Celíaco</option>
+          <option value="otra">Otra</option>
+        </select>
+      </label>
+      <div id="alergiaOtra_1" style="display:none">
+        <label>Especificar alergia: <input name="invitado1_alergia_otro"></label>
+      </div>
+    </fieldset>
+
+    <!-- Invitado 2 -->
+    <fieldset>
+      <legend>Invitado 2</legend>
+      <label>Nombre y Apellido: <input name="invitado2_nombre_apellido" required></label>
+      <label>Tipo:
+        <select name="invitado2_tipo">
+          <option value="adulto">Adulto</option>
+          <option value="niño">Niño</option>
+        </select>
+      </label>
+      <label>Restricción alimentaria:
+        <select name="invitado2_restriccion">
+          <option value="ninguna">Ninguna</option>
+          <option value="vegetariano">Vegetariano</option>
+          <option value="vegano">Vegano</option>
+        </select>
+      </label>
+      <label>Alergia alimentaria:
+        <select name="invitado2_alergia" onchange="document.getElementById('alergiaOtra_2').style.display = this.value === 'otra' ? 'block' : 'none';">
+          <option value="ninguna">Ninguna</option>
+          <option value="celiaco">Celíaco</option>
+          <option value="otra">Otra</option>
+        </select>
+      </label>
+      <div id="alergiaOtra_2" style="display:none">
+        <label>Especificar alergia: <input name="invitado2_alergia_otro"></label>
+      </div>
+    </fieldset>
 
     <button type="submit">Enviar</button>
   </form>
