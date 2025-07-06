@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Confirmación de hasta 2 Invitados</title>
+  <title>Confirmación de Invitados</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background-color: #1a1a1a;
-      color: #f0f0f0;
+      color: #7de6fc;
       font-family: 'Georgia', serif;
       margin: 0;
       padding: 0;
@@ -36,24 +36,30 @@
     }
     h1 {
       text-align: center;
-      color: #d4af37;
+      color: #3aa4c2;
       margin-top: 1em;
+    }
+    .info-evento {
+      text-align: center;
+      font-size: 1.1em;
+      color: #7de6fc;
+      padding: 0 3em;
     }
     form {
       max-width: 800px;
       margin: 2em auto;
-      background-color: #2a2a2a;
+      background-color: #1a1a1a;
       padding: 2em;
       border-radius: 8px;
       box-shadow: 0 0 10px #000;
     }
     fieldset {
-      border: 1px solid #555;
+      border: 1px solid #620024;
       padding: 1em;
       margin-bottom: 1em;
     }
     legend {
-      color: #c9a0dc;
+      color: #3aa4c2;
     }
     label {
       display: block;
@@ -62,20 +68,20 @@
     input, select, button {
       width: 100%;
       padding: 0.5em;
-      background-color: #333;
-      color: #fff;
-      border: 1px solid #666;
+      background-color: #2a2a2a;
+      color: #7de6fc;
+      border: 1px solid #002711;
       border-radius: 4px;
-      font-family: inherit;
+      font-family: 'Georgia', serif;
     }
     button {
-      background-color: #5e2b72;
+      background-color: #13676d;
       border: none;
       cursor: pointer;
       margin-top: 1em;
     }
     button:hover {
-      background-color: #7e3e90;
+      background-color: #002711;
     }
     @media (max-width: 600px) {
       .carrusel, .carrusel img {
@@ -85,19 +91,28 @@
         padding: 1em;
         margin: 1em;
       }
+      .info-evento {
+        padding: 0 2em;
+      }
     }
   </style>
+  <script>
+    function mostrarOtraAlergia(select, index) {
+      const div = document.getElementById('alergiaOtra_' + index);
+      div.style.display = select.value === 'otra' ? 'block' : 'none';
+    }
+  </script>
 </head>
 <body>
   <div class="carrusel">
     <div class="carrusel-inner">
       <img src="https://i.imgur.com/7ZCANjH.jpeg" alt="img1">
-      <img src="https://i.imgur.com/IlQAGqr.gif" alt="img2">
+      <img src="https://i.imgur.com/ZkIey98.jpeg" alt="img2">
       <img src="https://i.imgur.com/Z9oQYDA.jpeg" alt="img3">
       <img src="https://i.imgur.com/f6pqYAe.jpeg" alt="img4">
       <img src="https://i.imgur.com/YxWv45P.jpeg" alt="img5">
       <img src="https://i.imgur.com/7ZCANjH.jpeg" alt="img1">
-      <img src="https://i.imgur.com/IlQAGqr.gif" alt="img2">
+      <img src="https://i.imgur.com/ZkIey98.jpeg" alt="img2">
       <img src="https://i.imgur.com/Z9oQYDA.jpeg" alt="img3">
       <img src="https://i.imgur.com/f6pqYAe.jpeg" alt="img4">
       <img src="https://i.imgur.com/YxWv45P.jpeg" alt="img5">
@@ -105,20 +120,19 @@
   </div>
 
   <h1>Confirmación de Invitados</h1>
-  <p style="text-align: center; font-size: 1.1em; color: #ccc;">
+  <p class="info-evento">
     Matrimonio de <strong>Fernanda y Nicolás</strong><br>
-    Lugar: Casa Irene, La Cañada del Carmen B, Lampa<br>
+    Lugar: Casa Irene. La Cañada del Carmen B, Lampa<br>
     Fecha y hora: 17 de octubre de 2025, 19:00 horas
   </p>
 
   <form action="https://script.google.com/macros/s/AKfycbxjJhxrUxu9ullW67EYOCp_s7bsP7pZLNjVQjkiIJLF5s4AmkR-YJyeTOhXek-MRFhY/exec" method="POST">
-    <label>Correo:
+    <label>Correo de quien contesta:
       <input type="email" name="email_lider" required>
     </label>
 
     <input type="hidden" name="cantidad" value="2">
 
-    <!-- Invitado 1 -->
     <fieldset>
       <legend>Invitado 1</legend>
       <label>Nombre y Apellido: <input name="invitado1_nombre_apellido" required></label>
@@ -136,7 +150,7 @@
         </select>
       </label>
       <label>Alergia alimentaria:
-        <select name="invitado1_alergia" onchange="document.getElementById('alergiaOtra_1').style.display = this.value === 'otra' ? 'block' : 'none';">
+        <select name="invitado1_alergia" onchange="mostrarOtraAlergia(this, 1)">
           <option value="ninguna">Ninguna</option>
           <option value="celiaco">Celíaco</option>
           <option value="otra">Otra</option>
@@ -147,7 +161,6 @@
       </div>
     </fieldset>
 
-    <!-- Invitado 2 -->
     <fieldset>
       <legend>Invitado 2</legend>
       <label>Nombre y Apellido: <input name="invitado2_nombre_apellido" required></label>
@@ -165,7 +178,7 @@
         </select>
       </label>
       <label>Alergia alimentaria:
-        <select name="invitado2_alergia" onchange="document.getElementById('alergiaOtra_2').style.display = this.value === 'otra' ? 'block' : 'none';">
+        <select name="invitado2_alergia" onchange="mostrarOtraAlergia(this, 2)">
           <option value="ninguna">Ninguna</option>
           <option value="celiaco">Celíaco</option>
           <option value="otra">Otra</option>
