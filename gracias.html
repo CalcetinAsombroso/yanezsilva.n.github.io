@@ -19,10 +19,19 @@
       text-align: center;
     }
 
-    .imagen {
+    .imagen-container {
       width: 100%;
-      max-height: 80vh;
-      object-fit: cover;
+      max-height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+    }
+
+    .imagen {
+      max-width: 100%;
+      max-height: 60vh;
+      object-fit: contain;
     }
 
     .mensaje {
@@ -52,13 +61,14 @@
   </style>
 </head>
 <body>
-  <img class="imagen" src="https://i.imgur.com/fP6jgMi.jpeg" alt="Gracias">
+  <div class="imagen-container">
+    <img class="imagen" src="https://i.imgur.com/fP6jgMi.jpeg" alt="Gracias">
+  </div>
   <div class="mensaje">
     <h1>¡Gracias por confirmar tu asistencia!</h1>
     <p>
-      Nos alegra contar contigo en esta celebración tan especial.  
-      Muy pronto recibirás más información por correo.  
-      <br><br>
+      Nos alegra contar contigo en esta celebración tan especial.<br>
+      Muy pronto recibirás más información por correo.<br><br>
       ¡Nos vemos el 17 de octubre!
     </p>
   </div>
